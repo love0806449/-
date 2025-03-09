@@ -1,8 +1,8 @@
 import pygame
 from globals import *
-from sprite import Entity,Mob
-from player import Player
-from texturedata import solo_texture_data, atlas_texture_data
+from world.sprite import Entity,Mob
+from world.player import Player
+from world.texturedata import solo_texture_data, atlas_texture_data
 from opensimplex import OpenSimplex
 from camera import Camera
 class Scene:
