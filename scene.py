@@ -4,6 +4,7 @@ from sprite import Entity
 from player import Player
 from texturedata import solo_texture_data, atlas_texture_data
 from opensimplex import OpenSimplex
+from camera import Camera
 class Scene:
     def __init__(self,app) -> None:
         self.app=app
@@ -12,9 +13,12 @@ class Scene:
         self.atlas_textures=self.gen_atlast_textures('res/atlas.png')
 
         
+       
 
-        self.sprites=pygame.sprite.Group()
+        self.sprites=Camera()
+
         self.blocks=pygame.sprite.Group()
+
         self.entity=Entity([self.sprites],image=self.atlas_textures['grass'])
         Entity([self.sprites],position=(200,200),image=self.atlas_textures['stone'])
 
@@ -66,4 +70,4 @@ class Scene:
 
     def draw(self):
         self.app.screen.fill("lightblue")
-        self.sprites.draw(self.app.screen)
+        self.sprites.draw(self.player,self.app.screen)
