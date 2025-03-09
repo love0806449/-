@@ -1,6 +1,6 @@
 import pygame
 from globals import *
-from sprite import Entity
+from sprite import Entity,Mob
 from player import Player
 from texturedata import solo_texture_data, atlas_texture_data
 from opensimplex import OpenSimplex
@@ -27,6 +27,10 @@ class Scene:
 
         self.player=Player([self.sprites],self.solo_textures['player_static'],(600,300),parameters={'block_group':self.blocks,
                            'textures':self.atlas_textures})
+        
+        Entity([self.sprites,self.blocks],pygame.Surface((TILESIZE,TILESIZE*20)),(700,-500))
+        Mob([self.sprites],self.solo_textures['fish_static'],(800,-500),parameters={'block_group':self.blocks,
+                                                                                    'player':self.player})
 
         self.gen_world()
 
@@ -51,7 +55,7 @@ class Scene:
         noise_generator=OpenSimplex(seed=92564812)
 
         heightmap=[]
-        for y in range(100):
+        for y in range(60):
 
             #高度混亂係數
 
