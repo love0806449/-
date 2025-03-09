@@ -38,7 +38,7 @@ class Scene:
         return textures
     def gen_atlast_textures(self,filepath):
         textures={}
-        atlas_img=pygame.transform.scale(pygame.image.load(filepath).convert_alpha(),(TILESIZE*16,TILESIZE*16))
+        atlas_img=pygame.transform.scale(pygame.image.load(filepath).convert_alpha(),(TILESIZE*15,TILESIZE*15))
 
         for name,data in atlas_texture_data.items():
             textures[name]=pygame.Surface.subsurface(atlas_img,pygame.Rect(data['position'][0]*TILESIZE,
@@ -50,17 +50,34 @@ class Scene:
         noise_generator=OpenSimplex(seed=92564812)
 
         heightmap=[]
-        for y in range(20):
-            noise_value=noise_generator.noise2(y*0.05,0)
-            height=int((noise_value+1)*4+5)
+        for y in range(100):
+
+            #高度混亂係數
+
+            noise_value=noise_generator.noise2(y*0.02,0)
+
+            #地圖高度係數
+
+            height=int((noise_value+1)*20+5)
             heightmap.append(height)
 
         for x in range(len(heightmap)):
             for y in range(heightmap[x]):
+                #地圖起始點
+
                 y_offset=5-y+6
+
+                #起始點生成得方塊
+
                 texture=self.atlas_textures['dirt']
+
+                #地圖以上-1生成草地
+
                 if y==heightmap[x]-1:
                     texture=self.atlas_textures['grass']
+
+                #地圖以下-5生成石頭
+
                 if y<heightmap[x]-5:
                     texture=self.atlas_textures['stone']
                     
