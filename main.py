@@ -6,7 +6,7 @@ from events import EventHandler
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
+        self.screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
         self.running = True
 

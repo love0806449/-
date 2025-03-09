@@ -25,7 +25,8 @@ class Scene:
 
        
 
-        self.player=Player([self.sprites],self.solo_textures['player_static'],(600,300),parameters={'block_group':self.blocks})
+        self.player=Player([self.sprites],self.solo_textures['player_static'],(600,300),parameters={'block_group':self.blocks,
+                           'textures':self.atlas_textures})
 
         self.gen_world()
 
