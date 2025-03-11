@@ -6,6 +6,6 @@ atlas_texture_data={
     'stone':{'type':'block','size':(TILESIZE,TILESIZE),'position':(1,0)}
 }
 solo_texture_data={
-    'player_static':{'type':'player','file_path':'res/player.jpg','size':(TILESIZE,TILESIZE)},
-    'fish_static':{'type':'enemy','file_path':'res/fish.png','size':(TILESIZE,TILESIZE)}
+    'player_static':{'type':'player','file_path':'res/player.jpg','size':(TILESIZE*4,TILESIZE*4)},
+    'fish_static':{'type':'enemy','file_path':'res/fish.png','size':(TILESIZE*4,TILESIZE*4)}
 }

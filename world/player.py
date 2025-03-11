@@ -2,6 +2,8 @@ import pygame
 from globals import *
 from events import EventHandler
 from world.sprite import Entity
+from inventory.inventory import Inventory
+from world.items import *
 class Player(pygame.sprite.Sprite):
     def __init__(self,groups,image:pygame.Surface,position:tuple,parameters)->None:
         super().__init__(groups)
@@ -9,8 +11,10 @@ class Player(pygame.sprite.Sprite):
         self.rect=self.image.get_rect(topleft=position)
 
         #parameters
-        self.block_group=parameters['block_group']
+        self.groups_list=parameters['group_list']
         self.textures=parameters['textures']
+        self.block_group=self.groups_list['block_group']
+        self.inventory=parameters['inventory']
         
         self.velocity=pygame.math.Vector2()
         self.mass=5
@@ -77,13 +81,14 @@ class Player(pygame.sprite.Sprite):
             for block in self.block_group:
                 if block.rect.collidepoint(mouse_pos):
                     collision=True
-                    if EventHandler.clicked(1):
-                        block.kill()
+                    if EventHandler.clicked(1):#破壞方塊
+                        self.inventory.add_item(block)
+                        block.kill() 
                 if EventHandler.clicked(3):
                     if not collision:
                         placed=True
         if placed and not collision: 
-            Entity(block.in_groups,self.textures['grass'],self.get_block_pos(mouse_pos))                  
+            self.inventory.use(self,self.get_block_pos(mouse_pos))               
     #滑鼠跟隨視角
     def get_adjusted_mouse_pos(self)->tuple:
         mouse_pos=pygame.mouse.get_pos()

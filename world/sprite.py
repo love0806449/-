@@ -3,8 +3,9 @@ import pygame
 from globals import *
 import math
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, groups,image=pygame.Surface((TILESIZE,TILESIZE)),position=(0,0)):
+    def __init__(self, groups,image=pygame.Surface((TILESIZE,TILESIZE)),position=(0,0),name:str='default'):
        super().__init__(groups)
+       self.name=name
        self.in_groups=groups
        self.image = image
        self.rect = self.image.get_rect(topleft=position)
