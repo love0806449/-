@@ -92,9 +92,10 @@ class Scene:
 
                 #地圖以下-5生成石頭
 
-                if y<heightmap[x]-5:
+                if y<heightmap[x]-5 and y>heightmap[x]-12 :
                     block_type='stone'
-                    
+                if y<=heightmap[x]-12:
+                    block_type='diamond'  
                 Entity([self.sprites,self.blocks],self.atlas_textures[block_type],(x*TILESIZE,y_offset*TILESIZE),name=block_type)
     def update(self):
         self.sprites.update()

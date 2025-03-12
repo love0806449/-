@@ -32,4 +32,5 @@ items:dict[str,ItemData]={
     'grass':ItemData('grass',item_type=BlockItem),
     'dirt':ItemData('dirt',item_type=BlockItem),
     'stone':ItemData('stone',item_type=BlockItem),
+    'diamond':ItemData('diamond',item_type=BlockItem),
 }
