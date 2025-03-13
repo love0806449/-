@@ -2,7 +2,7 @@ import pygame
 from globals import *
 from events import EventHandler
 from world.sprite import Entity
-from inventory.inventory import Inventory
+from inventory.inventory import *
 from world.items import *
 class Player(pygame.sprite.Sprite):
     def __init__(self,groups,image:pygame.Surface,position:tuple,parameters)->None:
@@ -11,10 +11,14 @@ class Player(pygame.sprite.Sprite):
         self.rect=self.image.get_rect(topleft=position)
 
         #parameters
-        self.groups_list=parameters['group_list']
+        self.group_list=parameters['group_list']
         self.textures=parameters['textures']
-        self.block_group=self.groups_list['block_group']
+        self.block_group=self.group_list['block_group']
+        self.enemy_group=self.group_list['enemy_group']
         self.inventory=parameters['inventory']
+
+        #health parameters
+        self.health=parameters['health']
         
         self.velocity=pygame.math.Vector2()
         self.mass=5
@@ -30,11 +34,20 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_d]:
             self.velocity.x=1
         if not keys[pygame.K_a] and not keys[pygame.K_d]:
-            self.velocity.x=0
-
+            if self.velocity.x>0:
+                self.velocity.x -=0.1
+            elif self.velocity.x<0:
+                self.velocity.x+=1
+            if abs(self.velocity.x)<0.3:
+                self.velocity.x=0
         #jumping
         if self.grounded and EventHandler.keydown(pygame.K_SPACE):
             self.velocity.y=-PLAYERJUMPPOWER
+        
+        if EventHandler.clicked(1):
+            for enemy in self.enemy_group:
+                if enemy.rect.collidepoint(self.get_adjusted_mouse_pos()):
+                    self.inventory.slots[self.inventory.active_slot].attack(self,enemy)
 
     def move(self):
         self.velocity.y+=GRAVITY*self.mass
@@ -106,3 +119,6 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.move()
         self.block_handling()
+
+        if self.health<=0:
+            self.kill()

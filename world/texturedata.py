@@ -8,5 +8,6 @@ atlas_texture_data={
 }
 solo_texture_data={
     'player_static':{'type':'player','file_path':'res/player.jpg','size':(TILESIZE*4,TILESIZE*4)},
-    'fish_static':{'type':'enemy','file_path':'res/fish.png','size':(TILESIZE*4,TILESIZE*4)}
+    'fish_static':{'type':'enemy','file_path':'res/fish.png','size':(TILESIZE*4,TILESIZE*4)},
+    'short_sword':{'type':'weapon','file_path':'res/weapons/shortsword.png','size':(TILESIZE,TILESIZE)}
 }

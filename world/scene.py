@@ -11,35 +11,43 @@ class Scene:
     def __init__(self,app) -> None:
         self.app=app
 
-        self.solo_textures=self.gen_solo_texture()
-        self.atlas_textures=self.gen_atlast_textures('res/atlas.png')
+        self.textures=self.gen_solo_texture()
+        self.textures.update(self.gen_atlast_textures('res/atlas.png'))
 
         
        
 
         self.sprites=Camera()
-
         self.blocks=pygame.sprite.Group()
-
+        self.enemy_group=pygame.sprite.Group()
         self.group_list = {
             'sprites': self.sprites,
-            'block_group': self.blocks
+            'block_group': self.blocks,
+            'enemy_group':self.enemy_group
         }
 
         #inventory
-        self.inventory=Inventory(self.app,self.atlas_textures)
-        self.entity=Entity([self.sprites],image=self.atlas_textures['grass'])
+        self.inventory=Inventory(self.app,self.textures)
+        self.entity=Entity([self.sprites],image=self.textures['grass'])
 
 
        
 
-        self.player=Player([self.sprites],self.solo_textures['player_static'],(600,300),parameters={'group_list':self.group_list,
-                           'textures':self.atlas_textures,
-                           'inventory':self.inventory})
+        self.player=Player([self.sprites],self.textures['player_static'],(600,300),parameters={'group_list':self.group_list,
+                           'textures':self.textures,
+                           'inventory':self.inventory,
+                           'health':3})
         
 
-        Mob([self.sprites],self.solo_textures['fish_static'],(800,-500),parameters={'block_group':self.blocks,
-                                                                                    'player':self.player})
+        Mob([self.sprites,self.enemy_group],self.textures['fish_static'],(800,-500),parameters={'block_group':self.blocks,
+                                                                                    'player':self.player,
+                                                                                    'damage':1})
+        Mob([self.sprites,self.enemy_group],self.textures['fish_static'],(900,-500),parameters={'block_group':self.blocks,
+                                                                                    'player':self.player,
+                                                                                    'damage':1})
+        Mob([self.sprites,self.enemy_group],self.textures['fish_static'],(1200,-500),parameters={'block_group':self.blocks,
+                                                                                    'player':self.player,
+                                                                                    'damage':1})
 
         self.gen_world()
 
@@ -96,7 +104,7 @@ class Scene:
                     block_type='stone'
                 if y<=heightmap[x]-12:
                     block_type='diamond'  
-                Entity([self.sprites,self.blocks],self.atlas_textures[block_type],(x*TILESIZE,y_offset*TILESIZE),name=block_type)
+                Entity([self.sprites,self.blocks],self.textures[block_type],(x*TILESIZE,y_offset*TILESIZE),name=block_type)
     def update(self):
         self.sprites.update()
         self.inventory.update()
